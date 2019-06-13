@@ -1,0 +1,25 @@
+.block{
+    margin: 20px auto;
+    margin-top: 80px;
+    width: 50%;
+    text-align: center;
+    box-shadow: 0 2px 3px #ccc;
+    border: 1px solid #eee;
+    padding: 10px;
+    box-sizing: border-box;
+    
+}
+.a{
+    outline: none;
+    border: 1px solid #ccc;
+    background-color: white;
+    font: inherit;
+    padding: 6px 10px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+.button{
+    color:#ccc;
+    text-decoration: none;
+}
