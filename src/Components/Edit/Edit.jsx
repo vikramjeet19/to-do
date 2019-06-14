@@ -5,7 +5,7 @@ import './Edit.css'
 class Post extends React.Component {
     state = {
         title: '',
-        content: ''
+        content: []
     }
     submitHandler = (e) => {
         e.preventDefault();

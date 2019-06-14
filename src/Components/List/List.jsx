@@ -4,20 +4,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 class List extends React.Component {
-
+    state = {
+        todoData: []
+    }
     addTodo = () => {
         this.props.history.push('/add')
     }
-    edit=()=>{
+    edit = () => {
         console.log('edit')
     }
-
-    delete=()=>{
-        console.log('delete')
+    delete = (key) => {
+        let data = [...JSON.parse(localStorage.getItem('UserData'))]
+        data.map(id => {
+            if (id.title === key) {
+                data.splice(id.title, 1);
+                localStorage.setItem('UserData', JSON.stringify(data));
+                this.setState({ todoData: data })
+            }
+            return;
+        })
     }
+    addNew = () => {
+        let newTodo = prompt('enter new todo')
+        console.log(newTodo);
 
-    addNew=()=>{
-        console.log('addNew')
     }
 
     render() {
@@ -35,16 +45,22 @@ class List extends React.Component {
                     <Col>
                         <Card style={{ width: '18rem', marginTop: '50px' }}>
                             <Card.Header style={{ fontWeight: 'bold' }}>{key.title}
-                                <FontAwesomeIcon onClick={this.edit} style={{ cursor: 'pointer', marginLeft: '80px' }} icon={faEdit} />
-                                <FontAwesomeIcon onClick={this.delete} style={{ cursor: 'pointer', marginLeft: '20px' }} icon={faTrashAlt} />
-                                <FontAwesomeIcon onClick={this.addNew} style={{ cursor: 'pointer', marginLeft: '20px' }} icon={faPlusCircle} />
+                                <FontAwesomeIcon onClick={() => this.delete(key.title)}
+                                    style={{ cursor: 'pointer', marginLeft: '140px' }}
+                                    icon={faTrashAlt} />
+                                <FontAwesomeIcon onClick={this.addNew}
+                                    style={{ cursor: 'pointer', marginLeft: '20px' }}
+                                    icon={faPlusCircle} />
                             </Card.Header>
                             <ListGroup variant="flush">
-                                <ListGroup.Item >{key.content}</ListGroup.Item>
+                                <ListGroup.Item >{key.content}
+                                    <FontAwesomeIcon onClick={this.edit}
+                                        style={{ cursor: 'pointer', marginLeft: '140px' }}
+                                        icon={faEdit} />
+                                </ListGroup.Item>
                             </ListGroup>
                         </Card>
-                      
-                </Col>  )) : null}
+                    </Col>)) : null}
             </Row></>)
     }
 }
