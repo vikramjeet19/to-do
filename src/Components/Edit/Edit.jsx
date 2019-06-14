@@ -50,7 +50,7 @@ class Post extends React.Component {
                         Add Todo
                     </Form.Text>
                     <Form.Group controlId="content">
-                        <Form.Control as="textarea" onChange={this.changeHandler} rows="8" />
+                        <Form.Control as="textarea" onChange={this.changeHandler} rows="2" />
                     </Form.Group>
                     <Button onClick={this.submitHandler} variant="success">Submit</Button>
                 </Form>
