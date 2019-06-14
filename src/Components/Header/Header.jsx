@@ -8,9 +8,12 @@ const Header = (props) => {
     localStorage.clear();
     props.history.push('/')
   }
+  const Home=()=>{
+    props.history.push('/list')
+  }
   return (<>
     <Navbar bg="dark" variant="dark">
-      <Navbar.Brand >To-Do App</Navbar.Brand>
+      <Navbar.Brand style={{cursor:'pointer'}} onClick={Home} >To-Do App</Navbar.Brand>
       <Navbar.Collapse className="justify-content-end">
       <Button  variant="warning" onClick={clickedHandler}>Logout</Button>
       </Navbar.Collapse>

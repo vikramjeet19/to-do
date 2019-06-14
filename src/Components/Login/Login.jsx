@@ -9,9 +9,9 @@ class Login extends React.Component {
     }
     componentDidMount() {
         const data = [
-            { username: 'vicky1singh9@gmail.com', password: 'vicky@@19' , name:'Vicky' },
-            { username: 'singh_vicky83@yahoo.com', password: 'vicky@@19' , name:'Gagan'},
-            { username: 'vicky@gmail.com', password: 'vicky@@19',name:'Rohit' }]
+            { username: 'vicky1singh9@gmail.com', password: 'vicky@@19', name: 'Vicky' },
+            { username: 'singh_vicky83@yahoo.com', password: 'vicky@@19', name: 'Gagan' },
+            { username: 'vicky@gmail.com', password: 'vicky@@19', name: 'Rohit' }]
         localStorage.setItem('data', JSON.stringify(data))
     }
     changeHandler = (event) => {
@@ -32,10 +32,10 @@ class Login extends React.Component {
     render() {
         return (<div className='block'>
             <form >
-                <label>Email </label>
+                <label style={{position: 'static'}}>Email </label>
                 <input className='a' type="text" id='email' placeholder='Enter email id'
                     onChange={this.changeHandler} />
-                <label>Password </label>
+                <label style={{position: 'static'}}>Password </label>
                 <input className='a' type="password" id='password' placeholder='Password'
                     onChange={this.changeHandler} />
                 <Button onClick={this.submitHandler} style={{ margin: '20px', color: '#ccc' }}
