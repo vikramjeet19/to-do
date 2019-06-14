@@ -11,6 +11,7 @@ class Post extends React.Component {
         e.preventDefault();
         let data = [];
         if (this.state.title.length !== 0 && this.state.content.length !== 0) {
+            console.log(this.state.content.length )
             if (JSON.parse(localStorage.getItem('UserData')) !== null) {
                 data = [...JSON.parse(localStorage.getItem('UserData'))]
                 data.push(this.state);
@@ -33,7 +34,9 @@ class Post extends React.Component {
             [event.target.id]: event.target.value
         })
     }
+   
     render() {
+
         return (
             <Container style={{ marginTop: '50px', width: '80%' }}>
                 <Form >

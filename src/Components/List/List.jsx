@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Row, Col, ListGroup } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 class List extends React.Component {
     state = {
@@ -46,7 +46,7 @@ class List extends React.Component {
                         <Card style={{ width: '18rem', marginTop: '50px' }}>
                             <Card.Header style={{ fontWeight: 'bold' }}>{key.title}
                                 <FontAwesomeIcon onClick={() => this.delete(key.title)}
-                                    style={{ cursor: 'pointer', marginLeft: '140px' }}
+                                    style={{ cursor: 'pointer', marginLeft: '100px' }}
                                     icon={faTrashAlt} />
                                 <FontAwesomeIcon onClick={this.addNew}
                                     style={{ cursor: 'pointer', marginLeft: '20px' }}
@@ -55,7 +55,7 @@ class List extends React.Component {
                             <ListGroup variant="flush">
                                 <ListGroup.Item >{key.content}
                                     <FontAwesomeIcon onClick={this.edit}
-                                        style={{ cursor: 'pointer', marginLeft: '140px' }}
+                                        style={{ cursor: 'pointer', marginLeft: '100px' }}
                                         icon={faEdit} />
                                 </ListGroup.Item>
                             </ListGroup>

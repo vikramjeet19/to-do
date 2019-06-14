@@ -24,6 +24,7 @@ class Login extends React.Component {
         let value = JSON.parse(localStorage.getItem('data'));
         for (let i = 0; i < value.length; i++) {
             if (value[i].username === this.state.email && value[i].password === this.state.password) {
+                localStorage.setItem('currentUser', JSON.stringify(value[i]));
                 return this.props.history.push('/list');
             }
         }
