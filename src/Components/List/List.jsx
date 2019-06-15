@@ -40,6 +40,8 @@ class List extends React.Component {
         }
     }
 
+
+
     render() {
         let userdata = JSON.parse(localStorage.getItem('UserData'));
         return (<>
@@ -68,6 +70,9 @@ class List extends React.Component {
                                         <FontAwesomeIcon onClick={() => this.edit(key, index)}
                                             style={{ cursor: 'pointer', marginLeft: '100px' }}
                                             icon={faEdit} />
+                                            {/* <FontAwesomeIcon onClick={() => this.deleteList(key.title)}
+                                    style={{ cursor: 'pointer', marginLeft: '20px' }}
+                                    icon={faTrashAlt} /> */}
                                     </ListGroup.Item>
                                 )) :
                                     <ListGroup.Item >{key.content}
