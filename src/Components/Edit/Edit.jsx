@@ -8,11 +8,12 @@ class Post extends React.Component {
         content: [],
         flag: false
     }
-    componentDidMount = () => {
+    componentDidMount(){
         if (this.props.history.location.data) {
+            let i=this.props.history.location.data.i;
             this.setState({
-                title: this.props.history.location.data.title,
-                content: this.props.history.location.data.content,
+                title: this.props.history.location.data.Data.title,
+                content: this.props.history.location.data.Data.content[i],
                 flag: true
             })
         }
@@ -41,19 +42,19 @@ class Post extends React.Component {
             alert('enter data')
         }
     }
-    editHandler = (key) => {
+    editHandler = (title) => {
         let data = [...JSON.parse(localStorage.getItem('UserData'))];
+
         data.map((id,index) => {
-            if (id.title === key) {
-                data.splice(index, 1);
-                data.push(this.state);
-                localStorage.setItem('UserData', JSON.stringify(data));
-                this.setState({flag:false})
-                this.props.history.push('/list');
+            if (id.title === title) {
+               data[index].content[this.props.history.location.data.i]=this.state.content;
+               localStorage.setItem('UserData', JSON.stringify(data));
+                       this.setState({flag:false})
+                       this.props.history.push('/list');
             }
-            return(console.log('edited properly'))
         })
     }
+     
     changeHandler = (event) => {
 
         if(event.target.id==='content'){
@@ -62,8 +63,7 @@ this.setState({[event.target.id]:[event.target.value]})
             this.setState({
                 [event.target.id]: event.target.value
             })
-        }
-       
+        } 
     }
     render() {
         return (
@@ -85,7 +85,7 @@ this.setState({[event.target.id]:[event.target.value]})
                         <Form.Control as="textarea"  value={this.state.content}
                             onChange={this.changeHandler} rows="2" />
                     </Form.Group>
-                    {this.state.flag === true ? <Button onClick={() => this.editHandler(this.state.title)} variant="success">Submit</Button> :
+                    {this.state.flag === true ? <Button onClick={() => this.editHandler(this.state.title,this.state.content)} variant="success">Submit</Button> :
                         <Button onClick={this.submitHandler} variant="success">Submit</Button>}
 
                 </Form>
