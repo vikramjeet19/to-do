@@ -10,14 +10,15 @@ class List extends React.Component {
     addTodo = () => {
         this.props.history.push('/add')
     }
-    edit = () => {
-        console.log('edit')
+    edit = (data) => {
+        this.props.history.push({pathname:'/add',data:data})
+
     }
     delete = (key) => {
         let data = [...JSON.parse(localStorage.getItem('UserData'))]
-        data.map(id => {
+        data.map((id,index) => {
             if (id.title === key) {
-                data.splice(id.title, 1);
+                data.splice(index, 1);
                 localStorage.setItem('UserData', JSON.stringify(data));
                 this.setState({ todoData: data })
             }
@@ -25,9 +26,7 @@ class List extends React.Component {
         })
     }
     addNew = () => {
-        let newTodo = prompt('enter new todo')
-        console.log(newTodo);
-
+        prompt('enter new todo')
     }
 
     render() {
@@ -54,7 +53,7 @@ class List extends React.Component {
                             </Card.Header>
                             <ListGroup variant="flush">
                                 <ListGroup.Item >{key.content}
-                                    <FontAwesomeIcon onClick={this.edit}
+                                    <FontAwesomeIcon onClick={()=>this.edit(key)}
                                         style={{ cursor: 'pointer', marginLeft: '100px' }}
                                         icon={faEdit} />
                                 </ListGroup.Item>

@@ -5,13 +5,27 @@ import './Edit.css'
 class Post extends React.Component {
     state = {
         title: '',
-        content: []
+        content: '',
+        flag: false
+    }
+    componentDidMount = () => {
+        if (this.props.history.location.data) {
+            this.setState({
+                title: this.props.history.location.data.title,
+                content: this.props.history.location.data.content,
+                flag: true
+            })
+        }
+        return;
     }
     submitHandler = (e) => {
         e.preventDefault();
         let data = [];
+        if (this.state.flag === true) {
+            data = [...JSON.parse(localStorage.getItem('UserData'))]
+
+        }
         if (this.state.title.length !== 0 && this.state.content.length !== 0) {
-            console.log(this.state.content.length )
             if (JSON.parse(localStorage.getItem('UserData')) !== null) {
                 data = [...JSON.parse(localStorage.getItem('UserData'))]
                 data.push(this.state);
@@ -23,36 +37,48 @@ class Post extends React.Component {
                 localStorage.setItem('UserData', JSON.stringify(data));
                 this.props.history.push('/list');
             }
-
         } else {
             alert('enter data')
         }
     }
-
+    editHandler = (key) => {
+        let data = [...JSON.parse(localStorage.getItem('UserData'))];
+        data.map((id,index) => {
+            if (id.title === key) {
+                console.log(index)
+                data.splice(index, 1);
+                data.push(this.state);
+                localStorage.setItem('UserData', JSON.stringify(data));
+                this.props.history.push('/list');
+            }
+        })
+    }
     changeHandler = (event) => {
         this.setState({
             [event.target.id]: event.target.value
         })
     }
-   
     render() {
-
         return (
             <Container style={{ marginTop: '50px', width: '80%' }}>
                 <Form >
                     <div className="group">
-                        <input type="text" onChange={this.changeHandler} id='title' required />
+                        <input type="text" id='title' value={this.state.title}
+                            onChange={this.changeHandler} id='title' required />
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Title</label>
                     </div>
-                    <Form.Text  className="text-muted">
+                    <Form.Text className="text-muted">
                         Add Todo
                     </Form.Text>
                     <Form.Group controlId="content">
-                        <Form.Control as="textarea" onChange={this.changeHandler} rows="2" />
+                        <Form.Control as="textarea" value={this.state.content}
+                            onChange={this.changeHandler} rows="2" />
                     </Form.Group>
-                    <Button onClick={this.submitHandler} variant="success">Submit</Button>
+                    {this.state.flag === true ? <Button onClick={() => this.editHandler(this.state.title)} variant="success">Submit</Button> :
+                        <Button onClick={this.submitHandler} variant="success">Submit</Button>}
+
                 </Form>
             </Container >);
     }
