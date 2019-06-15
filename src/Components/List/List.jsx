@@ -5,28 +5,40 @@ import { faPlusCircle, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-ic
 
 class List extends React.Component {
     state = {
-        todoData: []
+        todoData: [],
     }
+
     addTodo = () => {
         this.props.history.push('/add')
     }
     edit = (data) => {
-        this.props.history.push({pathname:'/add',data:data})
-
+        this.props.history.push({ pathname: '/add', data: data })
     }
+
     delete = (key) => {
         let data = [...JSON.parse(localStorage.getItem('UserData'))]
-        data.map((id,index) => {
+        data.map((id, index) => {
             if (id.title === key) {
                 data.splice(index, 1);
                 localStorage.setItem('UserData', JSON.stringify(data));
                 this.setState({ todoData: data })
             }
-            return;
+            return (console.log('deleted'));
         })
     }
-    addNew = () => {
-        prompt('enter new todo')
+    addNew = (id) => {
+        
+     let todo=  prompt('enter data');
+     const allTodos = JSON.parse(localStorage.getItem('UserData'));
+      const index = allTodos.findIndex(todo=>todo.title===id);
+      if(index>-1){
+          allTodos[index].content.push(todo);
+          localStorage.setItem('UserData',JSON.stringify(allTodos)) ;
+          alert("Content added successfully.")
+      }else{
+          alert("No Todo Exist")
+      } 
+
     }
 
     render() {
@@ -47,16 +59,18 @@ class List extends React.Component {
                                 <FontAwesomeIcon onClick={() => this.delete(key.title)}
                                     style={{ cursor: 'pointer', marginLeft: '100px' }}
                                     icon={faTrashAlt} />
-                                <FontAwesomeIcon onClick={this.addNew}
+                                <FontAwesomeIcon onClick={()=>this.addNew(key.title)}
                                     style={{ cursor: 'pointer', marginLeft: '20px' }}
                                     icon={faPlusCircle} />
                             </Card.Header>
                             <ListGroup variant="flush">
-                                <ListGroup.Item >{key.content}
-                                    <FontAwesomeIcon onClick={()=>this.edit(key)}
+                                {key.content.map(i=>(
+                                    <ListGroup.Item >{i}
+                                    <FontAwesomeIcon onClick={() => this.edit(key)}
                                         style={{ cursor: 'pointer', marginLeft: '100px' }}
                                         icon={faEdit} />
                                 </ListGroup.Item>
+                                ))}
                             </ListGroup>
                         </Card>
                     </Col>)) : null}

@@ -5,7 +5,7 @@ import './Edit.css'
 class Post extends React.Component {
     state = {
         title: '',
-        content: '',
+        content: [],
         flag: false
     }
     componentDidMount = () => {
@@ -20,13 +20,13 @@ class Post extends React.Component {
     }
     submitHandler = (e) => {
         e.preventDefault();
+
         let data = [];
         if (this.state.flag === true) {
-            data = [...JSON.parse(localStorage.getItem('UserData'))]
-
+            data = [...JSON.parse(localStorage.getItem('UserData'))];
         }
         if (this.state.title.length !== 0 && this.state.content.length !== 0) {
-            if (JSON.parse(localStorage.getItem('UserData')) !== null) {
+            if (JSON.parse(localStorage.getItem('UserData')) !== null ) {              
                 data = [...JSON.parse(localStorage.getItem('UserData'))]
                 data.push(this.state);
                 localStorage.setItem('UserData', JSON.stringify(data));
@@ -45,35 +45,44 @@ class Post extends React.Component {
         let data = [...JSON.parse(localStorage.getItem('UserData'))];
         data.map((id,index) => {
             if (id.title === key) {
-                console.log(index)
                 data.splice(index, 1);
                 data.push(this.state);
                 localStorage.setItem('UserData', JSON.stringify(data));
+                this.setState({flag:false})
                 this.props.history.push('/list');
             }
+            return(console.log('edited properly'))
         })
     }
     changeHandler = (event) => {
-        this.setState({
-            [event.target.id]: event.target.value
-        })
+
+        if(event.target.id==='content'){
+this.setState({[event.target.id]:[event.target.value]})
+        }else{
+            this.setState({
+                [event.target.id]: event.target.value
+            })
+        }
+       
     }
     render() {
         return (
             <Container style={{ marginTop: '50px', width: '80%' }}>
                 <Form >
                     <div className="group">
-                        <input type="text" id='title' value={this.state.title}
-                            onChange={this.changeHandler} id='title' required />
+                       {this.state.flag===true? <input type="text" id='title' value={this.state.title}
+                            onChange={this.changeHandler}  required disabled/>:
+                             <input type="text" id='title' value={this.state.title}
+                            onChange={this.changeHandler}  required
+                            />}
                         <span className="highlight"></span>
                         <span className="bar"></span>
-                        <label>Title</label>
                     </div>
                     <Form.Text className="text-muted">
                         Add Todo
                     </Form.Text>
                     <Form.Group controlId="content">
-                        <Form.Control as="textarea" value={this.state.content}
+                        <Form.Control as="textarea"  value={this.state.content}
                             onChange={this.changeHandler} rows="2" />
                     </Form.Group>
                     {this.state.flag === true ? <Button onClick={() => this.editHandler(this.state.title)} variant="success">Submit</Button> :
